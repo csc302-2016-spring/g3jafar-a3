@@ -20,7 +20,7 @@ After:
 
 Unfortunately, the bug was put on hold because the developers were planning on replacing this interface design.
 
-At the same time, I had been assigned another bug, 1247190 ( https://bugzilla.mozilla.org/show_bug.cgi?id=1247190 ), due to a misunderstanding with the CDF id spreadsheet, when I had commented on the bug before another student, who also wanted the same bug, who wrote it on the spreadsheet before I did. I chose to back down and let them have it, but mozilla still assigned it. Upon my original bug being put on hold, I chose to do this one once the other student had changed their chosen bug anyway.
+At the same time, I had been assigned another bug, 1247190 ( https://bugzilla.mozilla.org/show_bug.cgi?id=1247190 ), due to a misunderstanding with the CDF id spreadsheet, when I had commented on the bug before another student, who also wanted the same bug, had written it on the spreadsheet before I did. I chose to back down and let them have it, but mozilla still assigned it. After my original bug was put on hold, I chose to do this one, since the other student had changed their chosen bug anyway.
 
 # Bug 1247190
 
