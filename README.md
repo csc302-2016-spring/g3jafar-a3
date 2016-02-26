@@ -11,8 +11,11 @@ Initially, I had picked bug 1205569 ( https://bugzilla.mozilla.org/show_bug.cgi?
 It turned out that once it's possible to simulate RTL formatting, a simple css margin fix provided acceptable output:
 
 Before:
+
 ![alt tag](https://github.com/csc302-2016-spring/g3jafar-a3/blob/master/screenshots/rtl.before.png)
+
 After:
+
 ![alt tag](https://github.com/csc302-2016-spring/g3jafar-a3/blob/master/screenshots/rtl.after.png)
 
 Unfortunately, the bug was put on hold because the developers were planning on replacing this interface design.
