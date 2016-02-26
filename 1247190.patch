@@ -1,0 +1,250 @@
+commit 74e7d0b1566e9df0408bacddf811f1f7b30f142f
+Author: jafar25 <jafar.hh@hotmail.com>
+Date:   Tue Feb 23 09:15:59 2016 -0500
+
+    Bug 1247190 - useDesktopPaths is now unnecessary and removed
+
+diff --git a/add-on/panels/js/roomViews.jsx b/add-on/panels/js/roomViews.jsx
+index 6917ec3..58996bf 100644
+--- a/add-on/panels/js/roomViews.jsx
++++ b/add-on/panels/js/roomViews.jsx
+@@ -580,8 +580,7 @@ loop.roomViews = (function(mozL10n) {
+                 renderRemoteVideo={this.shouldRenderRemoteVideo()}
+                 screenShareMediaElement={this.state.screenShareMediaElement}
+                 screenSharePosterUrl={null}
+-                showInitialContext={false}
+-                useDesktopPaths={true}>
++                showInitialContext={false}>
+                 <sharedViews.ConversationToolbar
+                   audio={{ enabled: !this.state.audioMuted, visible: true }}
+                   dispatcher={this.props.dispatcher}
+diff --git a/shared/js/textChatView.jsx b/shared/js/textChatView.jsx
+index 6af1b10..b9f790f 100644
+--- a/shared/js/textChatView.jsx
++++ b/shared/js/textChatView.jsx
+@@ -27,8 +27,7 @@ loop.shared.views.chat = (function(mozL10n) {
+       message: React.PropTypes.string.isRequired,
+       showTimestamp: React.PropTypes.bool.isRequired,
+       timestamp: React.PropTypes.string.isRequired,
+-      type: React.PropTypes.string.isRequired,
+-      useDesktopPaths: React.PropTypes.bool
++      type: React.PropTypes.string.isRequired
+     },
+ 
+     /**
+@@ -72,8 +71,7 @@ loop.shared.views.chat = (function(mozL10n) {
+               description={this.props.message}
+               dispatcher={this.props.dispatcher}
+               thumbnail={this.props.extraData.newRoomThumbnail}
+-              url={this.props.extraData.newRoomURL}
+-              useDesktopPaths={this.props.useDesktopPaths} />
++              url={this.props.extraData.newRoomURL} />
+             {this.props.showTimestamp ? this._renderTimestamp() : null}
+           </div>
+         );
+@@ -124,8 +122,7 @@ loop.shared.views.chat = (function(mozL10n) {
+     propTypes: {
+       dispatcher: React.PropTypes.instanceOf(loop.Dispatcher).isRequired,
+       messageList: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+-      showInitialContext: React.PropTypes.bool.isRequired,
+-      useDesktopPaths: React.PropTypes.bool.isRequired
++      showInitialContext: React.PropTypes.bool.isRequired
+     },
+ 
+     getInitialState: function() {
+@@ -209,8 +206,7 @@ loop.shared.views.chat = (function(mozL10n) {
+                             description={entry.message}
+                             dispatcher={this.props.dispatcher}
+                             thumbnail={entry.extraData.thumbnail}
+-                            url={entry.extraData.location}
+-                            useDesktopPaths={this.props.useDesktopPaths} />
++                            url={entry.extraData.location} />
+                         </div>
+                       );
+                     default:
+@@ -239,8 +235,7 @@ loop.shared.views.chat = (function(mozL10n) {
+                                  message={entry.message}
+                                  showTimestamp={shouldShowTimestamp}
+                                  timestamp={timestamp}
+-                                 type={entry.type}
+-                                 useDesktopPaths={this.props.useDesktopPaths} />
++                                 type={entry.type} />
+                   );
+               }, this)
+             }
+@@ -390,8 +385,7 @@ loop.shared.views.chat = (function(mozL10n) {
+ 
+     propTypes: {
+       dispatcher: React.PropTypes.instanceOf(loop.Dispatcher).isRequired,
+-      showInitialContext: React.PropTypes.bool.isRequired,
+-      useDesktopPaths: React.PropTypes.bool.isRequired
++      showInitialContext: React.PropTypes.bool.isRequired
+     },
+ 
+     getInitialState: function() {
+@@ -427,8 +421,7 @@ loop.shared.views.chat = (function(mozL10n) {
+           <TextChatEntriesView
+             dispatcher={this.props.dispatcher}
+             messageList={messageList}
+-            showInitialContext={this.props.showInitialContext}
+-            useDesktopPaths={this.props.useDesktopPaths} />
++            showInitialContext={this.props.showInitialContext} />
+           <TextChatInputView
+             dispatcher={this.props.dispatcher}
+             showPlaceholder={!hasSentMessages}
+diff --git a/shared/js/views.jsx b/shared/js/views.jsx
+index 30835d4..3d0e2e1 100644
+--- a/shared/js/views.jsx
++++ b/shared/js/views.jsx
+@@ -515,8 +515,6 @@ loop.shared.views = (function(_, mozL10n) {
+    *                                        shown.
+    * @property {String}  url                The url to be displayed. If not present or invalid,
+    *                                        then this view won't be displayed.
+-   * @property {Boolean} useDesktopPaths    Whether or not to use the desktop paths for for the
+-   *                                        fallback url.
+    */
+   var ContextUrlView = React.createClass({
+     mixins: [React.addons.PureRenderMixin],
+@@ -526,8 +524,7 @@ loop.shared.views = (function(_, mozL10n) {
+       description: React.PropTypes.string.isRequired,
+       dispatcher: React.PropTypes.instanceOf(loop.Dispatcher),
+       thumbnail: React.PropTypes.string,
+-      url: React.PropTypes.string,
+-      useDesktopPaths: React.PropTypes.bool.isRequired
++      url: React.PropTypes.string
+     },
+ 
+     /**
+@@ -555,9 +552,7 @@ loop.shared.views = (function(_, mozL10n) {
+       var thumbnail = this.props.thumbnail;
+ 
+       if (!thumbnail) {
+-        thumbnail = this.props.useDesktopPaths ?
+-          "shared/img/icons-16x16.svg#globe" :
+-          "shared/img/icons-16x16.svg#globe";
++        thumbnail = "shared/img/icons-16x16.svg#globe";
+       }
+ 
+       var wrapperClasses = classNames({
+@@ -806,8 +801,7 @@ loop.shared.views = (function(_, mozL10n) {
+       renderRemoteVideo: React.PropTypes.bool.isRequired,
+       screenShareMediaElement: React.PropTypes.object,
+       screenSharePosterUrl: React.PropTypes.string,
+-      showInitialContext: React.PropTypes.bool.isRequired,
+-      useDesktopPaths: React.PropTypes.bool.isRequired
++      showInitialContext: React.PropTypes.bool.isRequired
+     },
+ 
+     isLocalMediaAbsolutelyPositioned: function(matchMedia) {
+@@ -916,8 +910,7 @@ loop.shared.views = (function(_, mozL10n) {
+             </div>
+             <loop.shared.views.chat.TextChatView
+               dispatcher={this.props.dispatcher}
+-              showInitialContext={this.props.showInitialContext}
+-              useDesktopPaths={this.props.useDesktopPaths} />
++              showInitialContext={this.props.showInitialContext} />
+             {this.state.localMediaAboslutelyPositioned ?
+               null : this.renderLocalVideo()}
+           </div>
+diff --git a/shared/test/textChatView_test.js b/shared/test/textChatView_test.js
+index 060024a..09d450f 100644
+--- a/shared/test/textChatView_test.js
++++ b/shared/test/textChatView_test.js
+@@ -58,8 +58,7 @@ describe("loop.shared.views.TextChatView", function() {
+       var basicProps = {
+         dispatcher: dispatcher,
+         messageList: [],
+-        showInitialContext: true,
+-        useDesktopPaths: false
++        showInitialContext: true
+       };
+ 
+       return TestUtils.renderIntoDocument(
+@@ -71,8 +70,7 @@ describe("loop.shared.views.TextChatView", function() {
+       var basicProps = {
+         dispatcher: dispatcher,
+         messageList: [],
+-        showInitialContext: true,
+-        useDesktopPaths: false
++        showInitialContext: true
+       };
+ 
+       return React.render(
+@@ -411,7 +409,6 @@ describe("loop.shared.views.TextChatView", function() {
+       var props = _.extend({
+         dispatcher: dispatcher,
+         showInitialContext: true,
+-        useDesktopPaths: false,
+         showAlways: true
+       }, extraProps);
+       return TestUtils.renderIntoDocument(
+diff --git a/shared/test/views_test.js b/shared/test/views_test.js
+index ef0bb4f..da90c44 100644
+--- a/shared/test/views_test.js
++++ b/shared/test/views_test.js
+@@ -411,8 +411,7 @@ describe("loop.shared.views", function() {
+         allowClick: false,
+         description: "test",
+         dispatcher: dispatcher,
+-        showContextTitle: false,
+-        useDesktopPaths: false
++        showContextTitle: false
+       }, extraProps);
+       return TestUtils.renderIntoDocument(
+         React.createElement(sharedViews.ContextUrlView, props));
+@@ -459,7 +458,6 @@ describe("loop.shared.views", function() {
+ 
+     it("should use a default thumbnail for desktop if one is not supplied", function() {
+       view = mountTestComponent({
+-        useDesktopPaths: true,
+         url: "http://wonderful.invalid"
+       });
+ 
+@@ -744,8 +742,7 @@ describe("loop.shared.views", function() {
+         localVideoMuted: false,
+         matchMedia: window.matchMedia,
+         renderRemoteVideo: false,
+-        showInitialContext: false,
+-        useDesktopPaths: false
++        showInitialContext: false
+       };
+ 
+       return TestUtils.renderIntoDocument(
+diff --git a/standalone/content/js/standaloneRoomViews.jsx b/standalone/content/js/standaloneRoomViews.jsx
+index d2803db..ee58539 100644
+--- a/standalone/content/js/standaloneRoomViews.jsx
++++ b/standalone/content/js/standaloneRoomViews.jsx
+@@ -626,8 +626,7 @@ loop.standaloneRoomViews = (function(mozL10n) {
+             renderRemoteVideo={this.shouldRenderRemoteVideo()}
+             screenShareMediaElement={this.state.screenShareMediaElement}
+             screenSharePosterUrl={this.props.screenSharePosterUrl}
+-            showInitialContext={true}
+-            useDesktopPaths={false}>
++            showInitialContext={true}>
+             <StandaloneOverlayWrapper dispatcher={this.props.dispatcher} />
+             <StandaloneRoomInfoArea activeRoomStore={this.props.activeRoomStore}
+               dispatcher={this.props.dispatcher}
+diff --git a/ui/ui-showcase.jsx b/ui/ui-showcase.jsx
+index 7cca945..1caa773 100644
+--- a/ui/ui-showcase.jsx
++++ b/ui/ui-showcase.jsx
+@@ -1264,8 +1264,7 @@
+                            width={298}>
+               <div className="fx-embedded">
+                 <TextChatView dispatcher={dispatcher}
+-                              showInitialContext={false}
+-                              useDesktopPaths={false} />
++                              showInitialContext={false} />
+               </div>
+             </FramedExample>
+ 
+@@ -1278,8 +1277,7 @@
+                 <div className="media-wrapper">
+                   <TextChatView
+                     dispatcher={dispatcher}
+-                    showInitialContext={true}
+-                    useDesktopPaths={false} />
++                    showInitialContext={true} />
+                 </div>
+               </div>
+             </FramedExample>
