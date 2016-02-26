@@ -45,3 +45,5 @@ However after more consideration and testing, it seemed not as odd, as there wer
 I made a few changes to the files I wanted to modify for the bug to purposely produce errors that ensure tests for them were still run. Since they were being tested, everything was ready for the removal tests before submission.
 
 I removed the uses of useDesktopPaths in the files found with grep and ran "make build" and "make test" on the repository. It produced no new errors. The patch was ready to be made.
+
+I ensured no trailing spaces or bad formatting was in the patch before uploading to Bugzilla. Upon being reviewed by a mentor, it was deemed ready for a push.
